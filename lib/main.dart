@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:http/http.dart' as http;
+import 'dart:convert';
 
 void main() {
   runApp(const MyApp());
@@ -38,6 +40,29 @@ class _FileTypeSelectorState extends State<FileTypeSelector> {
     'jsp', 'scala', 'make', 'matlab', 'vb', 'perl', 'phtml', 'xsl', 'r', 'scm', 'sin'
   ];
   final List<bool> _selectedFileTypes = List.filled(42, false);
+
+  Future<void> fetchRepoData() async {
+    final selectedFileTypes = _fileTypes.where((type, index) => _selectedFileTypes[index]).toList();
+    final response = await http.post(
+      Uri.parse('http://localhost:5000/scrape'),
+      headers: <String, String>{
+        'Content-Type': 'application/json; charset=UTF-8',
+      },
+      body: jsonEncode(<String, dynamic>{
+        'repoUrl': _githubRepoController.text,
+        'docUrl': _documentationUrlController.text,
+        'selectedFileTypes': selectedFileTypes,
+      }),
+    );
+    if (response.statusCode == 200) {
+      // If the server returns a 200 OK response, parse the JSON.
+      print(jsonDecode(response.body)['response']);
+    } else {
+      // If the server did not return a 200 OK response,
+      // then throw an exception.
+      throw Exception('Failed to fetch repo data');
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -122,7 +147,7 @@ class _FileTypeSelectorState extends State<FileTypeSelector> {
               children: [
                 ElevatedButton(
                   onPressed: () {
-                    // TODO: Implement submit logic
+                    fetchRepoData();
                   },
                   child: const Text('Submit'),
                 ),
