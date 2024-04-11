@@ -42,7 +42,7 @@ class _FileTypeSelectorState extends State<FileTypeSelector> {
   final List<bool> _selectedFileTypes = List.filled(42, false);
 
   Future<void> fetchRepoData() async {
-    final selectedFileTypes = _fileTypes.where((type, index) => _selectedFileTypes[index]).toList();
+    final selectedFileTypes = _fileTypes.asMap().entries.where((entry) => _selectedFileTypes[entry.key]).map((entry) => entry.value).toList();
     final response = await http.post(
       Uri.parse('http://localhost:5000/scrape'),
       headers: <String, String>{
