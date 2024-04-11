@@ -10,17 +10,11 @@
 
 RepoToText is a web app that scrapes a GitHub repository and converts its files into a single organized .txt. It allows you to enter the URL of a GitHub repository and an optional documentation URL (the doc info will append to the top of the .txt). The app retrieves the contents of the repository, including all files and directories, and also fetches the documentation from the provided URL and includes it in a single organized text file. The .txt file will be saved in the /data folder with user + repo + timestamp info. This file can then be uploaded to (GPT-4, Claude Opus, etc) and you can use the chatbot to interact with the entire GitHub repo. 
 
-## Demo
 
-Creating a React front end for a GitHub repo containing a functioning back end:
 
-https://chat.openai.com/share/0670c1ec-a8a8-4568-ad09-bb9b152e1f0b
+## Running the Application with 'Flutter'
 
-Working front-end project: https://github.com/JeremiahPetersen/CaseConnect/tree/front-end
-
-## Running the Application with Docker
-
-To run the application using Docker, follow these steps:
+To run the application using 'Flutter', follow these steps:
 
 1. Clone the repository.
 2. Set up the environment variable `GITHUB_API_KEY` in the `.env` file.
